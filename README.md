@@ -39,9 +39,9 @@ The formula is `yearlyCaptionMins = averageProgramsPerMonth * averageLengthOfPro
 
 ### What We Are Looking For
 
-- Git / Node Proficancy - Can you get this project forked / cloned running locally.
-- CSS / Design Implementation Proficancy - Can you take this design and implement it in CSS.
-- Javascript Proficancy - Using browser apis / frameworks take the data from the client and submit it to the server.
+- Git / Node Proficiency - Can you get this project forked / cloned running locally.
+- CSS / Design Implementation Proficiency - Can you take this design and implement it in CSS.
+- Javascript Proficiency - Using browser apis / frameworks take the data from the client and submit it to the server.
 - Collaboration - We would like you to write a pull request to this project (or your own repo) with the data explaining your changes. We want to see how you work.
 
 
