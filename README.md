@@ -51,6 +51,10 @@ The formula is `yearlyCaptionMins = averageProgramsPerMonth * averageLengthOfPro
 
 ## Details
 
+### Don't worry about any of the website navigation / chrome.
+
+We are only worried about the caption calculator.
+
 ### You can use as much or as little of this project as you want. 
 
 For example you could use just the API and use your own favorite starter project for your framework of choice to submit the data entirely client side.
