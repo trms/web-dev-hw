@@ -13,9 +13,9 @@ const Toggle = ({ onChange } : ToggleProps) => {
     }
 
     return (
-        <div className="toggle-btn">
+        <div className="toggle-btn mt-3 md:mt-0">
           <input id="needsTranslations" name="needsTranslations" type="checkbox" defaultChecked={isToggled} onChange={handleChange} />
-          <span />
+          <span  />
         </div>
     )
 }

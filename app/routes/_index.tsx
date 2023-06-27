@@ -154,7 +154,7 @@ export default function Index() {
             />
             <div className="flex flex-col items-center text-center md:flex-row md:text-left">
               <img src="translate.png" alt="" />
-              <label htmlFor="needsTranslations" className="flex">
+              <label htmlFor="needsTranslations" className="flex flex-col items-center md:flex-row">
                 Do You Need Translations?
                 <Toggle onChange={handleInputChange} />
               </label>
