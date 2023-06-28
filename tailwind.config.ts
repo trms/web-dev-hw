@@ -1,10 +1,15 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 export default {
-  content: ['./app/**/*.{js,jsx,ts,tsx}'],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-} satisfies Config
-
+    content: ["./app/**/*.{js,jsx,ts,tsx}"],
+    theme: {
+        extend: {
+            colors: {
+                "dark-grey": "#535B6F",
+                "cta-blue": "#2F87CA",
+                "logo-green": "#26A35C",
+            },
+        },
+    },
+    plugins: [],
+} satisfies Config;
