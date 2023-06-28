@@ -18,17 +18,19 @@ export default function Index() {
         <>
             <Navigation />
             <div>
-                <h1 className="text-6xl text-center my-20">CAPTIONING CALCULATOR</h1>
-                <div className="grid grid-cols-3 gap-4 mx-56">
-                    <div className="col-span-2 mx-24">
-                        <h2 className="text-3xl font-bold my-8">How many captioning minutes will you need?</h2>
+                <h1 className="lg:text-6xl text-3xl text-center lg:my-20 my-10">CAPTIONING CALCULATOR</h1>
+                <div className="grid lg:grid-cols-3 gap-4 lg:mx-72 mx-10">
+                    <div className="lg:col-span-2 lg:mx-24">
+                        <h2 className="lg:text-3xl text-xl font-bold my-8">
+                            How many captioning minutes will you need?
+                        </h2>
                         <p className="text-xl">
                             The Cablecast Captioning Calculator is a tool to understand how many cablecast Captioning
                             Minutes you will need for a year of programming.
                         </p>
                     </div>
                     <div>
-                        <img src={ccImage} alt="closed captioning image" />
+                        <img className="my-0 mx-auto lg:ml-0" src={ccImage} alt="closed captioning image" />
                     </div>
                 </div>
                 {/*  

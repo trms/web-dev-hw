@@ -5,7 +5,7 @@ export default function Navigation() {
     const [navbar, setNavbar] = useState(false);
     return (
         <nav className="flex items-center md:justify-between justify-center flex-wrap bg-dark-grey p-6 lg:px-64 text-xl border-b-8 border-logo-green">
-            <img src={logo} className="lg:mx-10" />
+            <img src={logo} className="mx-10 sm:mx-0" />
             <div className="md:hidden flex items-center">
                 <button className="outline-none" onClick={() => setNavbar(!navbar)}>
                     <svg
