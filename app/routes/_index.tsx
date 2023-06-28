@@ -39,6 +39,8 @@ export default function Index() {
     const form = e.target;
 
     const data = {
+      name: form.querySelector('input[name="name"]').value,
+      email: form.querySelector('input[name="email"]').value,
       averageProgramsPerMonth: Number(
         form.querySelector('input[name="averageProgramsPerMonth"]').value
       ),
@@ -146,6 +148,46 @@ export default function Index() {
       <div className="w-3/4 mx-auto bg-[#EDEEF1] rounded-3xl text-center mb-64">
         {!submitData ? (
           <form className="block pb-12" onSubmit={handleSubmit}>
+            <div className="flex m-auto justify-left align-left pt-10 pb-6 w-3/4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="1em"
+                viewBox="0 0 448 512"
+                className="fill-[#2EB466] h-16"
+              >
+                <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+              </svg>
+              <p className="text-[#545C6D] text-3xl tracking-wider py-4 px-5">
+                What is your name?:
+              </p>
+              <input
+                className="border-4 border-[#8E97A9] rounded-full text-center"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="flex m-auto justify-left align-left pt-10 pb-6 w-3/4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="1em"
+                viewBox="0 0 512 512"
+                className="fill-[#2EB466] h-16"
+              >
+                <path d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z" />
+              </svg>
+              <p className="text-[#545C6D] text-3xl tracking-wider py-4 px-5">
+                What is your email?:
+              </p>
+              <input
+                className="border-4 border-[#8E97A9] rounded-full text-center"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
             <div className="flex m-auto justify-left align-left pt-10 pb-6 w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
