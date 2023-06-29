@@ -1,12 +1,12 @@
 # Cablecast Web Developer Take Home Assignment
 
-Thanks for taking the time to apply with us. We really appreciate it. The goal of this project is to guage how you work the way we work, remotely, largely indepenently, colobarating as needed. If you run into any issues at all with this project or have any questions please reach out to @raytiley.
+Thanks for taking the time to apply with us. We really appreciate it. The goal of this project is to gauge how you work the way we work, remotely, largely independently, collaborating as needed. If you run into any issues at all with this project or have any questions please reach out to @raytiley.
 
 - [Remix Docs](https://remix.run/docs)
 
-This project uses the remix.run framework to setup a very simple [Resource Route](https://remix.run/docs/en/main/guides/resource-routes) which is a simple way to get some basic api endpoints into the project. The endpoint is designed to take ether json or form encoded data of leads captured from a Closed Caption Usage calculator you will be building.
+This project uses the remix.run framework to setup a very simple [Resource Route](https://remix.run/docs/en/main/guides/resource-routes) which is a simple way to get some basic api endpoints into the project. The endpoint is designed to take either json or form encoded data of leads captured from a Closed Caption Usage calculator you will be building.
 
-The engineering team got this mockup from our marketing department. It's built in Canva, so we unfortunetly don't have design resources like illustrator files or figma. The design is also a bit incomplete. It doesn't have the `name` and `email` field required for actual lead capture.
+The engineering team got this mockup from our marketing department. It's built in Canva, so we unfortunately don't have design resources like illustrator files or figma. The design is also a bit incomplete. It doesn't have the `name` and `email` field required for actual lead capture.
 
 * This is a contrived example :) The marketing department is actually planning on putting this behind a gated page on our website where you already have to provide your name / email to access the calculator. For "real world" dealing incomplete resources is why I'm throwing in some curve balls. 
 
@@ -19,7 +19,7 @@ The engineering team got this mockup from our marketing department. It's built i
 
 ## The API
 
-The lead api is located in this project is in `app/routes/api.leads.tsx`. It can take a `Lead` as ether `json` or `formData`. It mocks out saving it by simply `console.log` the data it receives.
+The lead api is located in this project is in `app/routes/api.leads.tsx`. It can take a `Lead` as either `json` or `formData`. It mocks out saving it by simply `console.log` the data it receives.
 
 ```
 interface Lead {
