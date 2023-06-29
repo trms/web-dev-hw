@@ -67,8 +67,8 @@ export default function Index() {
     }
   };
 
+  // @ts-ignore
   const yearlyCaptionMins = apiResponse?.lead?.yearlyCaptionMins || 0;
-  console.log(JSON.stringify(yearlyCaptionMins));
 
   return (
     <div className="app w-full h-full min-h-min">
