@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 /*------------------------------------------
     HELPER FUNCTIONS
   ------------------------------------------ */
+// NOTE: I decided to try out remix-validated-form because of it's simplicity and ease for validation. I originally used 'useActionData();' to do server-side validation, but ran into some issues due to returning a JSON response instead of a redirect, which caused the app to stay on the action's route.
+
 const validator = withZod(
     z.object({
         name: z.string().min(1, { message: "First name is required" }),
@@ -37,6 +39,7 @@ type TextInputProps = {
     type: string;
 };
 
+// NOTE: remix-validated-form helped me to reduce my code quite a bit by being able to reuse a single component for both inputs and error handling. It was easy to customize the styles in one place as well.
 const TextInput = ({ name, label, type }: TextInputProps) => {
     const { error, getInputProps } = useField(name);
     const [borderColor, setBorderColor] = useState("medium-grey");
@@ -63,6 +66,7 @@ const TextInput = ({ name, label, type }: TextInputProps) => {
 };
 
 export default function Calculator() {
+    // NOTE: I wasn't sure if you wanted the calculation to occur in the backend or frontend. I chose the frontend since it wasn't a complex function, and didn't slow down the the user's experience.
     const [yearlyCaptionMins, setYearlyCaptionMins] = useState(0);
 
     const calculateCaptions = (form) => {
