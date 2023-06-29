@@ -126,13 +126,25 @@ export default function Calculator() {
             </form>
         );
     };
-    const FormResult = () => {
-        return <h1>FormResult</h1>;
+    const FormResults = () => {
+        return (
+            <>
+                <h1 className="text-2xl text-center">You will need approximately</h1>
+                <div className="text-center my-8">
+                    <input
+                        id="closedCaptioning"
+                        className="rounded-3xl border-4 border-medium-grey py-2 pl-1.5 text-center"
+                    />
+                </div>
+                <h2 className="text-2xl text-center">Of Closed Captioning for 1 year</h2>
+            </>
+        );
     };
 
     return (
         <div className="bg-light-grey container mx-auto rounded-3xl lg:w-7/12 w-11/12 p-10 lg:pl-14 pl-4 mt-6 lg:mb-10">
             <Form />
+            {/* <FormResults /> */}
         </div>
     );
 }
