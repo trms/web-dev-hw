@@ -1,7 +1,19 @@
+import { Form } from "@remix-run/react";
+import { useState } from "react";
+
 export default function Calculator() {
-    const Form = () => {
+    const [yearlyCaptionMins, setYearlyCaptionMins] = useState(0);
+
+    const handleSubmit = (event) => {
+        const averageProgramsPerMonth = event.target.averageProgramsPerMonth.value;
+        const averageLengthOfProgramsInHours = event.target.averageLengthOfProgramsInHours.value;
+
+        setYearlyCaptionMins(averageProgramsPerMonth * averageLengthOfProgramsInHours * 60);
+    };
+
+    const CalculatorForm = () => {
         return (
-            <form action="/api/leads" method="POST" className="text-2xl">
+            <Form action="/api/leads" method="POST" className="text-2xl" onSubmit={handleSubmit}>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +36,8 @@ export default function Calculator() {
                         id="name"
                         name="name"
                         placeholder="Pat Smith"
-                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center"
+                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center w-full max-w-sm"
+                        type="text"
                     />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
@@ -46,8 +59,10 @@ export default function Calculator() {
                     </label>
                     <input
                         id="email"
+                        name="email"
                         placeholder="patsmith@gmail.com"
-                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center"
+                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center w-full max-w-sm"
+                        type="text"
                     />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
@@ -70,8 +85,10 @@ export default function Calculator() {
                     </label>
                     <input
                         id="averageProgramsPerMonth"
+                        name="averageProgramsPerMonth"
                         placeholder="10"
                         className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center"
+                        type="text"
                     />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
@@ -95,8 +112,10 @@ export default function Calculator() {
                     </label>
                     <input
                         id="averageLengthOfProgramsInHours"
+                        name="averageLengthOfProgramsInHours"
                         placeholder="2"
                         className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center"
+                        type="text"
                     />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
@@ -116,35 +135,44 @@ export default function Calculator() {
                     </svg>
                     <span className="ml-3 mr-4  text-gray-900 dark:text-gray-300">Do You Need Translations?</span>
                     <label className="relative inline-flex items-center cursor-pointer my-0 mx-auto sm:ml-0">
-                        <input type="checkbox" value="" className="sr-only peer" />
+                        <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            id="needsTranslations"
+                            name="needsTranslations"
+                        />
                         <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-1 peer-focus:ring-logo-green dark:peer-focus:ring-logo-green dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-logo-green"></div>
                     </label>
                 </div>
                 <div className="text-center">
-                    <button className="rounded-full bg-logo-green text-white p-2 px-4">CALCULATE</button>
+                    <button className="rounded-full bg-logo-green text-white p-2 px-4" type="submit">
+                        CALCULATE
+                    </button>
                 </div>
-            </form>
+            </Form>
         );
     };
-    const FormResults = () => {
+    const CalculatorResults = () => {
         return (
             <>
                 <h1 className="text-2xl text-center">You will need approximately</h1>
                 <div className="text-center my-8">
                     <input
                         id="closedCaptioning"
-                        className="rounded-3xl border-4 border-medium-grey py-2 pl-1.5 text-center"
+                        className="rounded-3xl border-4 border-medium-grey py-2 pl-1.5 text-center bg-white"
+                        value={yearlyCaptionMins}
+                        readOnly={true}
+                        disabled={true}
                     />
                 </div>
-                <h2 className="text-2xl text-center">Of Closed Captioning for 1 year</h2>
+                <h2 className="text-2xl text-center">Of Closed Captioning Minutes for 1 year</h2>
             </>
         );
     };
 
     return (
         <div className="bg-light-grey container mx-auto rounded-3xl lg:w-7/12 w-11/12 p-10 lg:pl-14 pl-4 mt-6 lg:mb-10">
-            <Form />
-            {/* <FormResults /> */}
+            {yearlyCaptionMins === 0 ? <CalculatorForm /> : <CalculatorResults />}
         </div>
     );
 }

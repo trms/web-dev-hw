@@ -9,8 +9,7 @@ interface Lead {
     needsTranslations: boolean;
 }
 
-export async function action( { request }: ActionArgs) {
-    
+export async function action({ request }: ActionArgs) {
     try {
         const requestJson = request.clone();
         const jsonData = await requestJson.json();
@@ -27,7 +26,13 @@ export async function action( { request }: ActionArgs) {
         // Nothing todo here. We'll error before
     }
 
-    throw json({ message: "Unsupported content type. Supported values are application/json and application/x-www-form-urlencoded."}, {status: 401});
+    throw json(
+        {
+            message:
+                "Unsupported content type. Supported values are application/json and application/x-www-form-urlencoded.",
+        },
+        { status: 401 }
+    );
 }
 
 async function handleJsonBody(jsonData: any) {
@@ -36,31 +41,30 @@ async function handleJsonBody(jsonData: any) {
         email: jsonData.email,
         averageProgramsPerMonth: jsonData.averageProgramsPerMonth,
         averageLengthOfProgramsInHours: jsonData.averageLengthOfProgramsInHours,
-        needsTranslations: jsonData.needsTranslations
+        needsTranslations: jsonData.needsTranslations,
     };
     saveLead(lead);
-    return json({json: 'ok', lead})
+    return json({ json: "ok", lead });
 }
 
 async function handleFormData(formData: FormData) {
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const averageProgramsPerMonth = Number(formData.get('averageProgramsPerMonth')) ?? 0;
-    const averageLengthOfProgramsInHours = Number(formData.get('averageLengthOfProgramsInHours')) ?? 0;
-    const needsTranslations = formData.get('needsTranslations') == "YES";
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const averageProgramsPerMonth = Number(formData.get("averageProgramsPerMonth")) ?? 0;
+    const averageLengthOfProgramsInHours = Number(formData.get("averageLengthOfProgramsInHours")) ?? 0;
+    const needsTranslations = formData.get("needsTranslations") == "on";
     const lead: Lead = {
         name,
         email,
         averageProgramsPerMonth,
         averageLengthOfProgramsInHours,
-        needsTranslations
+        needsTranslations,
     };
-    await saveLead(lead);
-    return redirect('/');
 
+    await saveLead(lead);
+    return redirect("/");
 }
 
 async function saveLead(lead: Lead) {
     console.log(lead);
 }
-
