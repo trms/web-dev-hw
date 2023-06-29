@@ -21,6 +21,11 @@ export default function Index() {
     needsTranslations: false,
   });
   const [apiResponse, setApiResponse] = useState({ lead: null });
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
 
   const handleChange = (e: any) => {
     const { name, value, type, checked } = e.target;
@@ -67,88 +72,123 @@ export default function Index() {
     }
   };
 
-  // @ts-ignore
+  //@ts-ignore
   const yearlyCaptionMins = apiResponse?.lead?.yearlyCaptionMins || 0;
 
   return (
     <div className="app w-full h-full min-h-min">
-      <div className="bg-[#545c6f] h-24 border-b-[#2EB466] border-b-8">
-        <div className="flex m-auto max-w-7xl">
-          <nav className="max-w-[1200] mx-auto flex">
-            <a href="/" aria-label="logo">
-              <img src={mainLogo} className="w-36 h-20" />
-            </a>
-            <ul className="text-white flex m-auto text-lg items-center">
-              <li className="px-6 cursor-pointer">Products</li>
-              <li className="px-6 cursor-pointer">Services &amp; Add Ons</li>
-              <li className="px-6 cursor-pointer">Support</li>
-              <li className="px-6 cursor-pointer">News &amp; Resources</li>
-              <li className="px-6 cursor-pointer">About Us</li>
-              <div>
-                <ul className="text-white inline-flex mx-auto px-2">
-                  <li className="px-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="1em"
-                      viewBox="0 0 512 512"
-                      className="fill-white h-7 cursor-pointer"
-                    >
-                      <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
-                    </svg>
-                  </li>
-                  <li className="px-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="1em"
-                      viewBox="0 0 512 512"
-                      className="fill-white h-7 cursor-pointer"
-                    >
-                      <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
-                    </svg>
-                  </li>
-                  <li className="px-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="1em"
-                      viewBox="0 0 448 512"
-                      className="fill-white h-7 cursor-pointer"
-                    >
-                      <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
-                    </svg>
-                  </li>
-                </ul>
+      <div className="bg-[#545c6f] h-24 border-b-[rgb(46,180,102)] border-b-8">
+        <div className="flex m-auto max-w-7xl items-center lg:pt-3">
+          <nav className="w-full lg:max-w-[1200] mx-8 lg:mx-auto relative">
+            <div className="flex justify-between items-center">
+              <a href="/" aria-label="logo" className="mr-auto">
+                <img src={mainLogo} className="w-36 h-20" />
+              </a>
+              <div className="lg:hidden">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="#2EB466"
+                  onClick={toggleMenu}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16m-7 6h7"
+                  />
+                </svg>
               </div>
-              <div className="bg-[#3090C6] hover:bg-[#2F82CC] w-36 h-12 text-base flex items-center justify-center rounded-s cursor-pointer">
-                <a href="/">GET IN TOUCH</a>
-              </div>
-            </ul>
+              <ul
+                className={`lg:flex ${
+                  isMenuOpen
+                    ? 'absolute top-full left-0 right-0'
+                    : 'hidden relative'
+                } text-white bg-[#545c6f] text-lg items-center lg:pb-0 pb-5`}
+              >
+                <li className="px-6 cursor-pointer flex justify-center">
+                  Products
+                </li>
+                <li className="px-6 cursor-pointer flex justify-center">
+                  Services &amp; Add Ons
+                </li>
+                <li className="px-6 cursor-pointer flex justify-center">
+                  Support
+                </li>
+                <li className="px-6 cursor-pointer flex justify-center">
+                  News &amp; Resources
+                </li>
+                <li className="px-6 cursor-pointer flex justify-center">
+                  About Us
+                </li>
+                <div>
+                  <ul className="text-white lg:inline-flex mx-auto px-2 flex justify-center">
+                    <li className="px-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 512 512"
+                        className="fill-white h-7 cursor-pointer"
+                      >
+                        <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" />
+                      </svg>
+                    </li>
+                    <li className="px-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 512 512"
+                        className="fill-white h-7 cursor-pointer"
+                      >
+                        <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
+                      </svg>
+                    </li>
+                    <li className="px-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 448 512"
+                        className="fill-white h-7 cursor-pointer"
+                      >
+                        <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z" />
+                      </svg>
+                    </li>
+                  </ul>
+                </div>
+                <div className="bg-[#3090C6] hover:bg-[#2F82CC] w-36 h-12 text-base flex items-center justify-center rounded-s cursor-pointer mx-auto mt-5 lg:mt-0">
+                  <a href="/">GET IN TOUCH</a>
+                </div>
+              </ul>
+            </div>
           </nav>
         </div>
       </div>
       <div className="w-3/4 mx-auto text-[#545C6D]">
         <h1 className="text-5xl text-center py-10">CAPTIONING CALCULATOR</h1>
       </div>
-      <div className="w-3/4 mx-auto flex text-[#545C6D]">
-        <div className="w-2/3">
+      <div className="flex flex-col-reverse md:flex-row w-3/4 mx-auto text-[#545C6D]">
+        <div className="md:w-2/3 w-full">
           <h2 className="text-3xl tracking-wider py-4">
             How many captioning minutes will you need?
           </h2>
           <p className="text-xl tracking-wide">
             The Cablecast Captioning Calculator is a tool to understand how many
           </p>
-          <p className="text-xl tracking-wide">
+          <p className="text-xl tracking-wide pb-10 lg:pb-0">
             Cablecast Captioning Minutes you will need for a year of
             programming.
           </p>
         </div>
-        <div className="w-1/3">
+        <div className="md:w-1/3 w-full mx-auto">
           <img src={ccLogo} />
         </div>
       </div>
       <div className="w-3/4 mx-auto bg-[#EDEEF1] rounded-3xl text-center mb-64">
         {!submitData ? (
           <form className="block pb-12" onSubmit={handleSubmit}>
-            <div className="flex m-auto justify-left align-left pt-10 pb-6 w-3/4">
+            <div className="flex flex-col lg:flex-row m-auto justify-left align-left pt-10 pb-6 w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
@@ -161,14 +201,14 @@ export default function Index() {
                 What is your name?:
               </p>
               <input
-                className="border-4 border-[#8E97A9] rounded-full text-center"
+                className="h-20 lg:h-auto border-4 border-[#8E97A9] rounded-full text-center"
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
               />
             </div>
-            <div className="flex m-auto justify-left align-left pt-10 pb-6 w-3/4">
+            <div className="flex flex-col lg:flex-row m-auto justify-left align-left pt-10 pb-6 w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
@@ -181,14 +221,14 @@ export default function Index() {
                 What is your email?:
               </p>
               <input
-                className="border-4 border-[#8E97A9] rounded-full text-center"
+                className="h-20 lg:h-auto border-4 border-[#8E97A9] rounded-full text-center"
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
               />
             </div>
-            <div className="flex m-auto justify-left align-left pt-10 pb-6 w-3/4">
+            <div className="flex flex-col lg:flex-row m-auto justify-left align-left pt-10 pb-6 w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
@@ -201,7 +241,7 @@ export default function Index() {
                 Average Number of Programs Per Month:
               </p>
               <input
-                className="border-4 border-[#8E97A9] rounded-full text-center"
+                className="h-20 lg:h-auto border-4 border-[#8E97A9] rounded-full text-center"
                 type="number"
                 name="averageProgramsPerMonth"
                 value={formData.averageProgramsPerMonth}
@@ -209,7 +249,7 @@ export default function Index() {
                 required
               />
             </div>
-            <div className="flex m-auto justify-left align-left py-6 w-3/4">
+            <div className="flex flex-col lg:flex-row m-auto justify-left align-left py-6 w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
@@ -222,7 +262,7 @@ export default function Index() {
                 Average Length of Program in Hours:
               </p>
               <input
-                className="border-4 border-[#8E97A9] rounded-full text-center"
+                className="h-20 lg:h-auto border-4 border-[#8E97A9] rounded-full text-center"
                 type="number"
                 name="averageLengthOfProgramsInHours"
                 value={formData.averageLengthOfProgramsInHours}
@@ -230,7 +270,7 @@ export default function Index() {
                 required
               />
             </div>
-            <div className="flex m-auto justify-left align-left py-6 w-3/4">
+            <div className="flex flex-col lg:flex-row m-auto justify-left align-left py-6 w-3/4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="1em"
@@ -242,19 +282,21 @@ export default function Index() {
               <p className="text-[#545C6D] text-3xl tracking-wider py-4 px-5">
                 Do You Need Translations?
               </p>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="sr-only peer"
-                  name="needsTranslations"
-                  checked={formData.needsTranslations}
-                  onChange={handleChange}
-                />
-                <div className="w-20 h-10 bg-gray-200 peer-focus:outline-none peer-focus:none peer-focus:transparent dark:peer-focus:none rounded-full peer dark:bg-[#8E97A9] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-4 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-9 after:transition-all dark:border-[#8E97A9] peer-checked:bg-[#2EB466]"></div>
-              </label>
+              <div className="flex justify-center items-center">
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="sr-only peer"
+                    name="needsTranslations"
+                    checked={formData.needsTranslations}
+                    onChange={handleChange}
+                  />
+                  <div className="w-20 h-10 bg-gray-200 peer-focus:outline-none peer-focus:none peer-focus:transparent dark:peer-focus:none rounded-full peer dark:bg-[#8E97A9] peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute md:after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-9 after:w-9 after:transition-all dark:border-[#8E97A9] peer-checked:bg-[#2EB466]"></div>
+                </label>
+              </div>
             </div>
             <button
-              className="bg-green-500 hover:bg-green-600 text-white text-3xl tracking-wider py-4 px-5 rounded-full w-64"
+              className="bg-green-500 hover:bg-green-600 text-white text-3xl tracking-wider py-4 px-5 rounded-full w-64 mt-10"
               type="submit"
             >
               CALCULATE
