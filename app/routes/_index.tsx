@@ -9,7 +9,7 @@ export const meta: V2_MetaFunction = () => {
         {
             name: "description",
             content:
-                "A prototype of a closed caption calculator that can be used to capture leads for our Closed Captioning Project",
+                "A prototype of a closed caption calculator that can be used to capture leads for a Closed Captioning Project",
         },
     ];
 };

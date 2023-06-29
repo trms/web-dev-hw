@@ -11,14 +11,6 @@ interface Lead {
 
 export async function action({ request }: ActionArgs) {
     try {
-        const requestJson = request.clone();
-        const jsonData = await requestJson.json();
-        return await handleJsonBody(jsonData);
-    } catch {
-        // Nothing todo here. Just try form data next.
-    }
-
-    try {
         const requestFormData = request.clone();
         const formData = await requestFormData.formData();
         return await handleFormData(formData);
@@ -33,18 +25,6 @@ export async function action({ request }: ActionArgs) {
         },
         { status: 401 }
     );
-}
-
-async function handleJsonBody(jsonData: any) {
-    const lead: Lead = {
-        name: jsonData.name,
-        email: jsonData.email,
-        averageProgramsPerMonth: jsonData.averageProgramsPerMonth,
-        averageLengthOfProgramsInHours: jsonData.averageLengthOfProgramsInHours,
-        needsTranslations: jsonData.needsTranslations,
-    };
-    saveLead(lead);
-    return json({ json: "ok", lead });
 }
 
 async function handleFormData(formData: FormData) {

@@ -5,7 +5,10 @@ import { useIsSubmitting } from "remix-validated-form";
 import { useField } from "remix-validated-form";
 import { useState, useEffect } from "react";
 
-export const validator = withZod(
+/*------------------------------------------
+    HELPER FUNCTIONS
+  ------------------------------------------ */
+const validator = withZod(
     z.object({
         name: z.string().min(1, { message: "First name is required" }),
         email: z.string().min(1, { message: "Email is required" }).email("Must be a valid email"),
@@ -16,7 +19,10 @@ export const validator = withZod(
     })
 );
 
-export const SubmitButton = () => {
+/*------------------------------------------
+        JSX ELEMENTS
+  ------------------------------------------ */
+const SubmitButton = () => {
     const isSubmitting = useIsSubmitting();
     return (
         <button type="submit" disabled={isSubmitting} className="rounded-full bg-logo-green text-white p-2 px-4">
@@ -31,7 +37,7 @@ type TextInputProps = {
     type: string;
 };
 
-export const TextInput = ({ name, label, type }: TextInputProps) => {
+const TextInput = ({ name, label, type }: TextInputProps) => {
     const { error, getInputProps } = useField(name);
     const [borderColor, setBorderColor] = useState("medium-grey");
 
@@ -59,9 +65,9 @@ export const TextInput = ({ name, label, type }: TextInputProps) => {
 export default function Calculator() {
     const [yearlyCaptionMins, setYearlyCaptionMins] = useState(0);
 
-    const handleSubmit = (event) => {
-        const averageProgramsPerMonth = event.averageProgramsPerMonth;
-        const averageLengthOfProgramsInHours = event.averageLengthOfProgramsInHours;
+    const calculateCaptions = (form) => {
+        const averageProgramsPerMonth = form.averageProgramsPerMonth;
+        const averageLengthOfProgramsInHours = form.averageLengthOfProgramsInHours;
         setYearlyCaptionMins(averageProgramsPerMonth * averageLengthOfProgramsInHours * 60);
     };
 
@@ -72,7 +78,7 @@ export default function Calculator() {
                 action="/api/leads"
                 method="POST"
                 className="text-2xl"
-                onSubmit={handleSubmit}
+                onSubmit={calculateCaptions}
             >
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap">
                     <svg
