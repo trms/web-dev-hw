@@ -1,19 +1,79 @@
-import { Form } from "@remix-run/react";
-import { useState } from "react";
+import { ValidatedForm } from "remix-validated-form";
+import { withZod } from "@remix-validated-form/with-zod";
+import { z } from "zod";
+import { useIsSubmitting } from "remix-validated-form";
+import { useField } from "remix-validated-form";
+import { useState, useEffect } from "react";
+
+export const validator = withZod(
+    z.object({
+        name: z.string().min(1, { message: "First name is required" }),
+        email: z.string().min(1, { message: "Email is required" }).email("Must be a valid email"),
+        averageProgramsPerMonth: z.string().min(1, { message: "Average Number of Programs Per Month is required" }),
+        averageLengthOfProgramsInHours: z
+            .string()
+            .min(1, { message: "Average Length Of Programs In Hours is required" }),
+    })
+);
+
+export const SubmitButton = () => {
+    const isSubmitting = useIsSubmitting();
+    return (
+        <button type="submit" disabled={isSubmitting} className="rounded-full bg-logo-green text-white p-2 px-4">
+            {isSubmitting ? "CALCULATING..." : "CALCULATE"}
+        </button>
+    );
+};
+
+type TextInputProps = {
+    name: string;
+    label: string;
+    type: string;
+};
+
+export const TextInput = ({ name, label, type }: TextInputProps) => {
+    const { error, getInputProps } = useField(name);
+    const [borderColor, setBorderColor] = useState("medium-grey");
+
+    useEffect(() => {
+        error ? setBorderColor("red-500") : setBorderColor("medium-grey");
+    }, [error]);
+
+    return (
+        <div className="sm:flex sm:grow">
+            <label className="sm:mr-4 flex items-center sm:flex-nowrap" htmlFor={name}>
+                {label}
+            </label>
+            <input
+                className={`rounded-3xl border-4 border-${borderColor} py-px pl-1.5 text-center w-full max-w-sm`}
+                {...getInputProps({
+                    id: name,
+                    type: type,
+                })}
+            />
+            {error && <div className="text-red-500 text-sm pl-2">*{error}</div>}
+        </div>
+    );
+};
 
 export default function Calculator() {
     const [yearlyCaptionMins, setYearlyCaptionMins] = useState(0);
 
     const handleSubmit = (event) => {
-        const averageProgramsPerMonth = event.target.averageProgramsPerMonth.value;
-        const averageLengthOfProgramsInHours = event.target.averageLengthOfProgramsInHours.value;
-
+        const averageProgramsPerMonth = event.averageProgramsPerMonth;
+        const averageLengthOfProgramsInHours = event.averageLengthOfProgramsInHours;
         setYearlyCaptionMins(averageProgramsPerMonth * averageLengthOfProgramsInHours * 60);
     };
 
     const CalculatorForm = () => {
         return (
-            <Form action="/api/leads" method="POST" className="text-2xl" onSubmit={handleSubmit}>
+            <ValidatedForm
+                validator={validator}
+                action="/api/leads"
+                method="POST"
+                className="text-2xl"
+                onSubmit={handleSubmit}
+            >
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -29,16 +89,7 @@ export default function Calculator() {
                             d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
                         />
                     </svg>
-                    <label className="sm:mr-4 flex items-center sm:flex-nowrap" htmlFor="name">
-                        Name:
-                    </label>
-                    <input
-                        id="name"
-                        name="name"
-                        placeholder="Pat Smith"
-                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center w-full max-w-sm"
-                        type="text"
-                    />
+                    <TextInput name="name" label="Name:" type="text" />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
                     <svg
@@ -54,16 +105,7 @@ export default function Calculator() {
                             d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 10-2.636 6.364M16.5 12V8.25"
                         />
                     </svg>
-                    <label className="mr-4 flex items-center md:flex-nowrap" htmlFor="email">
-                        Email:
-                    </label>
-                    <input
-                        id="email"
-                        name="email"
-                        placeholder="patsmith@gmail.com"
-                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center w-full max-w-sm"
-                        type="text"
-                    />
+                    <TextInput name="email" label="Email:" type="text" />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
                     <svg
@@ -80,15 +122,10 @@ export default function Calculator() {
                             d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"
                         />
                     </svg>
-                    <label className="mr-4 flex items-center md:flex-nowrap" htmlFor="averageProgramsPerMonth">
-                        Average Number of Programs Per Month:
-                    </label>
-                    <input
-                        id="averageProgramsPerMonth"
+                    <TextInput
                         name="averageProgramsPerMonth"
-                        placeholder="10"
-                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center"
-                        type="text"
+                        label="Average Number of Programs Per Month:"
+                        type="number"
                     />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
@@ -106,16 +143,10 @@ export default function Calculator() {
                             d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-
-                    <label className="mr-4 flex items-center md:flex-nowrap" htmlFor="averageLengthOfProgramsInHours">
-                        Average Length Of Programs In Hours:
-                    </label>
-                    <input
-                        id="averageLengthOfProgramsInHours"
+                    <TextInput
                         name="averageLengthOfProgramsInHours"
-                        placeholder="2"
-                        className="rounded-3xl border-4 border-medium-grey py-px pl-1.5 text-center"
-                        type="text"
+                        label="Average Length Of Programs In Hours:"
+                        type="number"
                     />
                 </div>
                 <div className="flex justify-start items-center flex-wrap sm:flex-nowrap my-6">
@@ -145,11 +176,9 @@ export default function Calculator() {
                     </label>
                 </div>
                 <div className="text-center">
-                    <button className="rounded-full bg-logo-green text-white p-2 px-4" type="submit">
-                        CALCULATE
-                    </button>
+                    <SubmitButton />
                 </div>
-            </Form>
+            </ValidatedForm>
         );
     };
     const CalculatorResults = () => {
