@@ -10,7 +10,7 @@ interface Lead {
 }
 
 export async function action( { request }: ActionArgs) {
-    
+
     try {
         const requestJson = request.clone();
         const jsonData = await requestJson.json();
@@ -38,7 +38,7 @@ async function handleJsonBody(jsonData: any) {
         averageLengthOfProgramsInHours: jsonData.averageLengthOfProgramsInHours,
         needsTranslations: jsonData.needsTranslations
     };
-    saveLead(lead);
+    await saveLead(lead);
     return json({json: 'ok', lead})
 }
 
@@ -47,7 +47,7 @@ async function handleFormData(formData: FormData) {
     const email = formData.get('email') as string;
     const averageProgramsPerMonth = Number(formData.get('averageProgramsPerMonth')) ?? 0;
     const averageLengthOfProgramsInHours = Number(formData.get('averageLengthOfProgramsInHours')) ?? 0;
-    const needsTranslations = formData.get('needsTranslations') == "YES";
+    const needsTranslations = Boolean(formData.get('needsTranslations'))
     const lead: Lead = {
         name,
         email,
@@ -56,11 +56,11 @@ async function handleFormData(formData: FormData) {
         needsTranslations
     };
     await saveLead(lead);
-    return redirect('/');
+    const yearlyCaptionMinsCost = averageProgramsPerMonth * averageLengthOfProgramsInHours * 60
+    return json({json: 'ok', lead, yearlyCaptionMinsCost})
 
 }
 
 async function saveLead(lead: Lead) {
     console.log(lead);
 }
-

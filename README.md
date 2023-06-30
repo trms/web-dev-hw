@@ -19,7 +19,7 @@ The engineering team got this mockup from our marketing department. It's built i
 
 ## The API
 
-The lead api is located in this project is in `app/routes/api.leads.tsx`. It can take a `Lead` as ether `json` or `formData`. It mocks out saving it by simply `console.log` the data it receives.
+The lead api is located in this project is in `app/routes/leads.tsx`. It can take a `Lead` as ether `json` or `formData`. It mocks out saving it by simply `console.log` the data it receives.
 
 ```
 interface Lead {
